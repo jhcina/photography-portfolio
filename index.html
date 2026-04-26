@@ -658,61 +658,200 @@
             }
         }
 
+        /* ============================================
+           Mobile Design - Magazine Style Double Column
+           ============================================ */
         @media (max-width: 768px) {
             :root {
-                --space-lg: 32px;
-                --space-xl: 64px;
-                --space-xxl: 80px;
+                --space-lg: 24px;
+                --space-xl: 48px;
+                --space-xxl: 64px;
+                --nav-height: 56px;
             }
 
+            /* 更紧凑的导航 */
             .nav {
-                padding: 0 var(--space-sm);
+                padding: 0 16px;
+                height: var(--nav-height);
+            }
+
+            .nav-logo {
+                font-size: 20px;
             }
 
             .nav-links {
-                gap: var(--space-sm);
+                gap: 16px;
             }
 
             .nav-link {
-                font-size: 12px;
+                font-size: 11px;
+                letter-spacing: 0.08em;
             }
 
+            /* Hero 区域优化 */
+            .hero {
+                min-height: 100vh;
+                padding: calc(var(--nav-height) + 32px) 20px 64px;
+            }
+
+            .hero-title {
+                font-size: clamp(32px, 10vw, 48px);
+                line-height: 1.15;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+            }
+
+            .scroll-indicator {
+                display: none;
+            }
+
+            /* 作品集 - 双列杂志风格 */
+            .gallery {
+                padding: 48px 12px;
+            }
+
+            .section-header {
+                margin-bottom: 32px;
+            }
+
+            .section-label {
+                font-size: 10px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            /* 双列瀑布流 - 小间距精致感 */
             .masonry-grid {
                 column-count: 2;
-                column-gap: var(--space-sm);
+                column-gap: 8px;
             }
 
             .masonry-item {
-                margin-bottom: var(--space-sm);
+                margin-bottom: 8px;
             }
 
-            .lightbox-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
+            /* 移动端标题始终显示 - 杂志感 */
+            .masonry-overlay {
+                opacity: 1;
+                background: linear-gradient(
+                    to top,
+                    rgba(26, 26, 26, 0.75) 0%,
+                    rgba(26, 26, 26, 0.3) 40%,
+                    rgba(26, 26, 26, 0) 70%
+                );
+                padding: 12px;
             }
 
-            .lightbox-prev {
-                left: 10px;
+            .overlay-title {
+                transform: translateY(0);
+                opacity: 1;
+                font-size: 15px;
+                margin-bottom: 2px;
             }
 
-            .lightbox-next {
-                right: 10px;
+            .overlay-number {
+                transform: translateY(0);
+                opacity: 1;
+                font-size: 10px;
+            }
+
+            /* 移动端取消 hover 效果 */
+            .masonry-item::before {
+                display: none;
+            }
+
+            .masonry-item:hover img {
+                transform: none;
+                filter: none;
+            }
+
+            /* 关于我区域 */
+            .about {
+                padding: 48px 20px;
+            }
+
+            .about-image {
+                max-width: 200px;
+                margin-bottom: 24px;
+            }
+
+            .about-content h2 {
+                font-size: 24px;
+            }
+
+            .about-content p {
+                font-size: 14px;
+            }
+
+            .about-quote {
+                font-size: 16px;
+            }
+
+            /* 页脚 */
+            .footer {
+                padding: 32px 20px;
             }
 
             .footer-links {
-                flex-direction: column;
-                gap: var(--space-sm);
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px 24px;
+            }
+
+            .footer-link {
+                font-size: 13px;
+            }
+
+            /* Lightbox 导航按钮 */
+            .lightbox-nav {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .lightbox-prev {
+                left: 8px;
+            }
+
+            .lightbox-next {
+                right: 8px;
+            }
+
+            .lightbox-info {
+                bottom: -40px;
+                font-size: 16px;
             }
         }
 
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 36px;
+        /* 超小屏幕 - 仍保持双列 */
+        @media (max-width: 380px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-link {
+                font-size: 10px;
             }
 
             .masonry-grid {
-                column-count: 1;
+                column-gap: 6px;
+            }
+
+            .masonry-item {
+                margin-bottom: 6px;
+            }
+
+            .overlay-title {
+                font-size: 13px;
             }
         }
     </style>
@@ -900,7 +1039,7 @@
                 </div>
             </div>
             <div class="masonry-item fade-in" data-index="22">
-                <img src="images/photo-22.png" alt="芷若" loading="lazy">
+                <img src="images/photo-22.jpg" alt="芷若" loading="lazy">
                 <div class="masonry-overlay">
                     <h3 class="overlay-title">芷若</h3>
                     <span class="overlay-number">No. 22</span>
