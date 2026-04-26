@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>乙的摄影作品集</title>
+    <title>乙 · 摄影作品集</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
            ============================================ */
         :root {
             /* Colors */
-            --color-bg: #FAF9F6;
+            --color-bg: #F5F0E6;
             --color-bg-secondary: #F5F3EF;
             --color-text: #1A1A1A;
             --color-text-secondary: #666666;
@@ -72,6 +72,17 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
+        /* 宣纸纹理效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+        }
+
         img {
             max-width: 100%;
             height: auto;
@@ -102,10 +113,10 @@
             padding: 0 var(--space-lg);
         }
 
-        .nav-logo {
+        .nav-brand {
             font-family: var(--font-heading);
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 500;
             letter-spacing: 0.02em;
             color: var(--color-accent);
         }
@@ -145,134 +156,140 @@
         }
 
         /* ============================================
-           Hero Section - Full Screen Background Image
+           Hero Section - Desktop & Mobile Versions
            ============================================ */
+
+        /* 默认隐藏移动端版本 */
+        .hero-mobile {
+            display: none;
+        }
+
+        /* 桌面端：左图右文分屏布局 */
         .hero {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: var(--nav-height) var(--space-lg) var(--space-xl);
+            max-height: 100vh;
             position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .hero-desktop {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: contents;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 100vh;
             overflow: hidden;
         }
 
-        /* 背景图片 */
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-        }
-
-        .hero-bg img {
+        .hero-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            object-position: center 30%;
-            filter: brightness(0.7);
-            transform: scale(1.05);
-            animation: heroZoom 20s ease-in-out infinite alternate;
+            object-fit: contain;
+            object-position: center center;
         }
 
-        @keyframes heroZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+        .hero-desktop-bg {
+            display: none;
         }
 
-        /* 渐变遮罩 - 让文字更清晰 */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(26, 26, 26, 0.3) 0%,
-                rgba(26, 26, 26, 0.5) 50%,
-                rgba(26, 26, 26, 0.7) 100%
-            );
-            z-index: 1;
+        .hero-desktop-overlay {
+            display: none;
         }
 
         .hero-content {
-            max-width: 800px;
             position: relative;
-            z-index: 2;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding: calc(var(--nav-height) + 40px) 60px 40px 60px;
+            background: var(--color-bg);
+        }
+
+        .hero-content-inner {
+            max-width: 480px;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
         }
 
         .hero-title {
             font-family: var(--font-heading);
-            font-size: clamp(48px, 8vw, 96px);
+            font-size: clamp(36px, 4vw, 56px);
             font-weight: 400;
-            line-height: 1.1;
+            line-height: 1.15;
             margin-bottom: var(--space-md);
-            color: #FFFFFF;
-            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            color: var(--color-text);
         }
 
         .hero-title em {
             font-style: italic;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--color-accent);
         }
 
         .hero-subtitle {
             font-family: var(--font-quote);
-            font-size: clamp(18px, 2.5vw, 24px);
+            font-size: clamp(14px, 1.8vw, 18px);
             font-style: italic;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: var(--space-lg);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
             font-weight: 400;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
         }
 
         .hero-divider {
-            width: 60px;
+            width: 40px;
             height: 1px;
-            background: rgba(255, 255, 255, 0.6);
-            margin: 0 auto var(--space-lg);
+            background: var(--color-accent);
+            margin-bottom: var(--space-md);
         }
 
         .hero-description {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.8;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            line-height: 1.9;
+            margin-bottom: var(--space-lg);
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: var(--space-lg);
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
+        .hero-cta {
+            display: inline-flex;
             align-items: center;
-            gap: var(--space-xs);
-            color: rgba(255, 255, 255, 0.7);
+            gap: 12px;
             font-size: 12px;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            z-index: 2;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+            padding: 14px 32px;
+            transition: all var(--transition-base);
+            cursor: pointer;
+            background: transparent;
         }
 
-        .scroll-indicator-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
-            animation: scrollPulse 2s ease-in-out infinite;
+        .hero-cta:hover {
+            background: var(--color-accent);
+            color: #FFFFFF;
+            border-color: var(--color-accent);
         }
 
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+        .hero-cta-arrow {
+            transition: transform var(--transition-base);
+        }
+
+        .hero-cta:hover .hero-cta-arrow {
+            transform: translateX(4px);
         }
 
         /* ============================================
@@ -317,14 +334,15 @@
             overflow: hidden;
             cursor: pointer;
             background: var(--color-border);
+            border-radius: 2px;
         }
 
         .masonry-item img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                        filter 0.4s ease;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        filter 0.5s ease;
             will-change: transform;
         }
 
@@ -366,8 +384,8 @@
         }
 
         .masonry-item:hover img {
-            transform: scale(1.05);
-            filter: brightness(1.08) saturate(1.1);
+            transform: scale(1.03);
+            filter: brightness(1.02);
         }
 
         .masonry-item:hover .masonry-overlay {
@@ -455,13 +473,41 @@
             font-family: var(--font-heading);
             font-size: clamp(28px, 4vw, 42px);
             font-weight: 400;
-            margin-bottom: var(--space-md);
+            margin-bottom: var(--space-sm);
             color: var(--color-text);
         }
 
         .about-content h2 em {
             font-style: italic;
             color: var(--color-accent);
+        }
+
+        .about-tags {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: var(--space-md);
+        }
+
+        .about-identity {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .about-tag-name {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--color-accent);
+            min-width: 60px;
+        }
+
+        .about-tag-role {
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--color-text-secondary);
         }
 
         .about-divider {
@@ -544,7 +590,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity var(--transition-base);
+            transition: opacity 0.4s ease;
         }
 
         .lightbox.active {
@@ -556,84 +602,179 @@
             max-width: 90vw;
             max-height: 90vh;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .lightbox-content img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
+        .lightbox-image-container {
+            position: relative;
+            overflow: hidden;
             border-radius: 4px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-image-container img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        opacity 0.3s ease;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        /* 滑动动画 */
+        .lightbox-image-container img.slide-left {
+            transform: translateX(-100px);
+            opacity: 0;
+        }
+
+        .lightbox-image-container img.slide-right {
+            transform: translateX(100px);
+            opacity: 0;
+        }
+
+        .lightbox-image-container img.slide-in {
+            transform: translateX(0);
+            opacity: 1;
         }
 
         .lightbox-close {
             position: absolute;
-            top: -40px;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            color: #FFFFFF;
-            font-size: 24px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-        }
-
-        .lightbox-close:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.1);
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             color: #FFFFFF;
-            font-size: 24px;
+            font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--transition-fast);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: rotate(90deg);
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
         .lightbox-nav:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.05);
         }
 
         .lightbox-prev {
-            left: -80px;
+            left: 24px;
         }
 
         .lightbox-next {
-            right: -80px;
+            right: 24px;
         }
 
         .lightbox-info {
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            right: 0;
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-family: var(--font-heading);
             font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.2s;
+        }
+
+        .lightbox.active .lightbox-info {
+            opacity: 1;
+        }
+
+        .lightbox-title {
+            font-size: 20px;
+            letter-spacing: 0.05em;
         }
 
         .lightbox-counter {
-            font-size: 14px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.5);
-            margin-top: var(--space-xs);
+            margin-top: 8px;
+            letter-spacing: 0.1em;
+        }
+
+        /* 滑动提示 */
+        .lightbox-hint {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.4s ease 0.4s;
+        }
+
+        .lightbox.active .lightbox-hint {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .lightbox-nav {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .lightbox-prev {
+                left: 12px;
+            }
+
+            .lightbox-next {
+                right: 12px;
+            }
+
+            .lightbox-close {
+                top: 12px;
+                right: 12px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .lightbox-info {
+                bottom: 24px;
+            }
+
+            .lightbox-hint {
+                display: none;
+            }
         }
 
         /* ============================================
@@ -641,13 +782,19 @@
            ============================================ */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(40px) scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .fade-in.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
+        }
+
+        /* 瀑布流图片交错动画 */
+        .masonry-item.fade-in {
+            transition-delay: calc(var(--item-index, 0) * 80ms);
         }
 
         /* ============================================
@@ -708,8 +855,8 @@
                 height: var(--nav-height);
             }
 
-            .nav-logo {
-                font-size: 20px;
+            .nav-brand {
+                font-size: 15px;
             }
 
             .nav-links {
@@ -721,29 +868,123 @@
                 letter-spacing: 0.08em;
             }
 
-            /* Hero 区域优化 */
+            /* Hero 区域 - 移动端全屏背景图 */
             .hero {
-                min-height: 100vh;
-                padding: calc(var(--nav-height) + 32px) 20px 64px;
+                display: block;
+                max-height: none;
             }
 
-            .hero-bg img {
-                object-position: center center;
+            .hero-desktop {
+                display: none;
             }
 
-            .hero-title {
-                font-size: clamp(32px, 10vw, 48px);
-                line-height: 1.15;
+            .hero-mobile {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100vh;
+                position: relative;
             }
 
-            .hero-subtitle {
-                font-size: 16px;
+            .hero-mobile-bg {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center top;
             }
 
-            .hero-description {
+            .hero-mobile-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.1) 0%,
+                    rgba(0, 0, 0, 0.05) 30%,
+                    rgba(0, 0, 0, 0.15) 60%,
+                    rgba(0, 0, 0, 0.4) 100%
+                );
+            }
+
+            .hero-mobile-content {
+                position: relative;
+                z-index: 1;
+                padding: calc(var(--nav-height) + 32px) 20px 0;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                min-height: 60vh;
+            }
+
+            .hero-mobile-content .hero-label {
+                font-size: 10px;
+                color: rgba(255, 255, 255, 0.85);
+                margin-bottom: 12px;
+            }
+
+            .hero-mobile-content .hero-title {
+                font-size: clamp(32px, 10vw, 52px);
+                color: #FFFFFF;
+                margin-bottom: 12px;
+                text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .hero-mobile-content .hero-title em {
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .hero-mobile-content .hero-subtitle {
                 font-size: 14px;
+                color: rgba(255, 255, 255, 0.9);
+                margin-bottom: 24px;
             }
 
+            .hero-mobile-bottom {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                margin-top: auto;
+                padding-bottom: 24px;
+            }
+
+            .hero-mobile-bottom .hero-cta {
+                display: inline-flex;
+                background: rgba(255, 255, 255, 0.2);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                color: #FFFFFF;
+                backdrop-filter: blur(10px);
+                padding: 12px 28px;
+                font-size: 12px;
+                letter-spacing: 0.1em;
+                margin-bottom: 16px;
+            }
+
+            .hero-mobile-bottom .hero-cta:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+
+            .hero-mobile-scroll {
+                text-align: center;
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 11px;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+            }
+
+            .scroll-arrow {
+                margin-top: 8px;
+                font-size: 20px;
+                animation: bounce 2s infinite;
+            }
+
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(6px); }
+            }
+
+            .hero-divider,
+            .hero-description,
             .scroll-indicator {
                 display: none;
             }
@@ -810,26 +1051,61 @@
                 filter: none;
             }
 
-            /* 关于我区域 */
+            /* 关于我区域 - 左右式布局 */
             .about {
-                padding: 48px 20px;
+                padding: 48px 16px;
+            }
+
+            .about-container {
+                grid-template-columns: auto 1fr;
+                gap: 16px;
+                text-align: left;
+                align-items: start;
             }
 
             .about-image {
-                max-width: 200px;
-                margin-bottom: 24px;
+                width: 100px;
+                max-width: 100px;
+                margin: 0;
             }
 
             .about-content h2 {
-                font-size: 24px;
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .about-tags {
+                margin-bottom: 12px;
+                gap: 8px;
+            }
+
+            .about-tag-name {
+                font-size: 12px;
+                min-width: 50px;
+            }
+
+            .about-tag-role {
+                font-size: 11px;
             }
 
             .about-content p {
-                font-size: 14px;
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .about-divider {
+                margin-left: 0;
+                margin-right: 0;
+                width: 40px;
             }
 
             .about-quote {
-                font-size: 16px;
+                border-left: 2px solid var(--color-accent);
+                border-top: none;
+                padding-left: 12px;
+                padding-top: 0;
+                font-size: 14px;
+                margin-top: 16px;
             }
 
             /* 页脚 */
@@ -896,7 +1172,7 @@
 <body>
     <!-- Navigation -->
     <nav class="nav">
-        <div class="nav-logo">乙</div>
+        <div class="nav-brand">乙 · 摄影作品集</div>
         <div class="nav-links">
             <a href="#about" class="nav-link">关于我</a>
             <a href="#works" class="nav-link">作品集</a>
@@ -906,24 +1182,47 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <!-- 背景图片 -->
-        <div class="hero-bg">
-            <img src="images/photo-22.jpg" alt="背景">
+        <!-- 桌面端：左图右文分屏布局 -->
+        <div class="hero-desktop">
+            <div class="hero-image">
+                <img src="images/photo-17.jpg" alt="白薇">
+            </div>
+            <div class="hero-content">
+                <div class="hero-content-inner">
+                    <p class="hero-label">Photography Portfolio</p>
+                    <h1 class="hero-title">用镜头书写<em>温柔</em></h1>
+                    <p class="hero-subtitle">"In every portrait, there's a whisper of the soul."</p>
+                    <div class="hero-divider"></div>
+                    <p class="hero-description">
+                        捕捉光影里的细腻情绪，记录少女最柔软的时光。每一帧，都是关于她、关于美、关于那个瞬间的故事。
+                    </p>
+                    <a href="#works" class="hero-cta">
+                        <span>浏览作品</span>
+                        <span class="hero-cta-arrow">→</span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- 渐变遮罩 -->
-        <div class="hero-overlay"></div>
-        <!-- 内容 -->
-        <div class="hero-content">
-            <h1 class="hero-title">用镜头书写<em>温柔</em></h1>
-            <p class="hero-subtitle">"In every portrait, there's a whisper of the soul."</p>
-            <div class="hero-divider"></div>
-            <p class="hero-description">
-                捕捉光影里的细腻情绪，记录少女最柔软的时光。每一帧，都是关于她、关于美、关于那个瞬间的故事。
-            </p>
-        </div>
-        <div class="scroll-indicator">
-            <span>探索</span>
-            <div class="scroll-indicator-line"></div>
+
+        <!-- 移动端：全屏背景 + 玉竹（竖图）+ 文字叠加 -->
+        <div class="hero-mobile">
+            <img src="images/photo-15.jpg" alt="玉竹" class="hero-mobile-bg">
+            <div class="hero-mobile-overlay"></div>
+            <div class="hero-mobile-content">
+                <p class="hero-label">Photography Portfolio</p>
+                <h1 class="hero-title">用镜头书写<em>温柔</em></h1>
+                <p class="hero-subtitle">"In every portrait, there's a whisper of the soul."</p>
+            </div>
+            <div class="hero-mobile-bottom">
+                <a href="#works" class="hero-cta">
+                    <span>浏览作品</span>
+                    <span class="hero-cta-arrow">→</span>
+                </a>
+                <div class="hero-mobile-scroll">
+                    <span>向下滚动</span>
+                    <div class="scroll-arrow">↓</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1131,6 +1430,70 @@
                     <span class="overlay-number">No. 28</span>
                 </div>
             </div>
+            <!-- 新增作品：纪实 -->
+            <div class="masonry-item fade-in" data-index="29">
+                <img src="images/photo-31.jpg" alt="I" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">I</h3>
+                    <span class="overlay-number">京都</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="30">
+                <img src="images/photo-32.jpg" alt="II" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">II</h3>
+                    <span class="overlay-number">镰仓</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="31">
+                <img src="images/photo-33.jpg" alt="III" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">III</h3>
+                    <span class="overlay-number">夜色</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="32">
+                <img src="images/photo-34.jpg" alt="合欢" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">合欢</h3>
+                    <span class="overlay-number">No. 29</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="33">
+                <img src="images/photo-35.jpg" alt="IV" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">IV</h3>
+                    <span class="overlay-number">纪实</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="34">
+                <img src="images/photo-36.jpg" alt="V" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">V</h3>
+                    <span class="overlay-number">纪实</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="35">
+                <img src="images/photo-38.jpg" alt="VI" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">VI</h3>
+                    <span class="overlay-number">纪实</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="36">
+                <img src="images/photo-39.jpg" alt="VII" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">VII</h3>
+                    <span class="overlay-number">纪实</span>
+                </div>
+            </div>
+            <div class="masonry-item fade-in" data-index="37">
+                <img src="images/photo-40.jpg" alt="VIII" loading="lazy">
+                <div class="masonry-overlay">
+                    <h3 class="overlay-title">VIII</h3>
+                    <span class="overlay-number">纪实</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1141,7 +1504,17 @@
                 <img src="images/avatar.jpg" alt="乙" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="about-content fade-in">
-                <h2>关于<em>我</em></h2>
+                <h2>关于 · 我</h2>
+                <div class="about-tags">
+                    <div class="about-identity">
+                        <span class="about-tag-name">乙</span>
+                        <span class="about-tag-role">摄影师 · 写真 · 人像 · 纪实</span>
+                    </div>
+                    <div class="about-identity">
+                        <span class="about-tag-name">煎饼使</span>
+                        <span class="about-tag-role">思考者 · 内容创作 · Vibe Coding</span>
+                    </div>
+                </div>
                 <div class="about-divider"></div>
                 <p>
                     我从 2010 年开始接触人像摄影。那些年，镜头是我探索世界的方式，也是我与每一位被摄者建立联结的桥梁。
@@ -1153,7 +1526,7 @@
                     如今重回摄影，我邀请你一起体验——记录线下真实的瞬间，捕捉那些不经意间流露的情绪与故事。每一次快门，都是一次对话；每一张照片，都是关于「你」的独特记忆。
                 </p>
                 <p>
-                    此外，我运营着「煎饼使」思考账号，分享思维与方法论；也在探索 Vibe Coding，这个网站便是我亲手搭建。如果你也对摄影、思考或创作感兴趣，欢迎来聊聊。
+                    除了摄影，我也在运营「<strong>煎饼使</strong>」思考账号，分享思维与方法论；这个网站便是我亲手搭建。如果你对摄影、思考或内容创作 vibe coding 感兴趣，欢迎通过小红书「<strong>煎饼使</strong>」或微博「<strong>小乙</strong>」找到我，一起聊聊。
                 </p>
                 <blockquote class="about-quote">
                     "用镜头记录真实，让每一帧都有故事。"
@@ -1173,35 +1546,43 @@
                 <a href="https://www.instagram.com/jhcina/" class="footer-link" target="_blank">Instagram</a>
             </div>
             <p class="footer-copyright">
-                &copy; 2026 乙的摄影作品集 &middot; All Rights Reserved
+                &copy; 2026 乙 · 摄影作品集 &middot; All Rights Reserved
             </p>
         </div>
     </footer>
 
     <!-- Lightbox Modal -->
     <div class="lightbox" id="lightbox">
+        <button class="lightbox-close">&times;</button>
+        <button class="lightbox-nav lightbox-prev">&#8249;</button>
+        <button class="lightbox-nav lightbox-next">&#8250;</button>
         <div class="lightbox-content">
-            <button class="lightbox-close">&times;</button>
-            <button class="lightbox-nav lightbox-prev">&#8249;</button>
-            <img src="" alt="" id="lightbox-img">
-            <button class="lightbox-nav lightbox-next">&#8250;</button>
-            <div class="lightbox-info">
-                <div id="lightbox-title"></div>
-                <div class="lightbox-counter" id="lightbox-counter"></div>
+            <div class="lightbox-image-container">
+                <img src="" alt="" id="lightbox-img">
             </div>
         </div>
+        <div class="lightbox-info">
+            <div class="lightbox-title" id="lightbox-title"></div>
+            <div class="lightbox-counter" id="lightbox-counter"></div>
+        </div>
+        <div class="lightbox-hint">← 左右滑动切换 →</div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // ============================================
-            // Scroll Animation - Fade In on Scroll
+            // Scroll Animation - Staggered Fade In
             // ============================================
             const fadeElements = document.querySelectorAll('.fade-in');
 
+            // 为瀑布流项目添加交错索引
+            document.querySelectorAll('.masonry-item.fade-in').forEach((item, index) => {
+                item.style.setProperty('--item-index', index % 4); // 每行错开，循环
+            });
+
             const observerOptions = {
                 root: null,
-                rootMargin: '0px',
+                rootMargin: '50px 0px', // 提前触发，更流畅
                 threshold: 0.1
             };
 
@@ -1209,6 +1590,7 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // 只动画一次，提升性能
                     }
                 });
             }, observerOptions);
@@ -1255,7 +1637,7 @@
             });
 
             // ============================================
-            // Lightbox Functionality
+            // Lightbox Functionality with Swipe Support
             // ============================================
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
@@ -1269,17 +1651,41 @@
             let currentIndex = 0;
             const totalImages = galleryItems.length;
 
-            function openLightbox(index) {
-                currentIndex = index;
+            // 触摸滑动相关变量
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const swipeThreshold = 50;
+
+            function updateLightboxContent(index, direction = null) {
                 const item = galleryItems[index];
                 const img = item.querySelector('img');
                 const title = item.querySelector('.overlay-title').textContent;
 
-                lightboxImg.src = img.src;
-                lightboxImg.alt = img.alt;
-                lightboxTitle.textContent = title;
-                lightboxCounter.textContent = `${index + 1} / ${totalImages}`;
+                // 滑动动画
+                if (direction === 'left') {
+                    lightboxImg.classList.remove('slide-in');
+                    lightboxImg.classList.add('slide-left');
+                } else if (direction === 'right') {
+                    lightboxImg.classList.remove('slide-in');
+                    lightboxImg.classList.add('slide-right');
+                }
 
+                setTimeout(() => {
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt;
+                    lightboxTitle.textContent = title;
+                    lightboxCounter.textContent = `${index + 1} / ${totalImages}`;
+
+                    // 触发进入动画
+                    lightboxImg.classList.remove('slide-left', 'slide-right');
+                    lightboxImg.classList.add('slide-in');
+                }, direction ? 150 : 0);
+            }
+
+            function openLightbox(index) {
+                currentIndex = index;
+                lightboxImg.classList.add('slide-in');
+                updateLightboxContent(index);
                 lightbox.classList.add('active');
                 document.body.style.overflow = 'hidden';
             }
@@ -1291,34 +1697,44 @@
 
             function showPrev() {
                 currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-                openLightbox(currentIndex);
+                updateLightboxContent(currentIndex, 'right');
             }
 
             function showNext() {
                 currentIndex = (currentIndex + 1) % totalImages;
-                openLightbox(currentIndex);
+                updateLightboxContent(currentIndex, 'left');
             }
 
-            // Click on gallery item to open lightbox
+            // 点击画廊项目打开 lightbox
             galleryItems.forEach((item, index) => {
                 item.addEventListener('click', () => openLightbox(index));
             });
 
-            // Close button
-            closeBtn.addEventListener('click', closeLightbox);
+            // 关闭按钮
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeLightbox();
+            });
 
-            // Navigation buttons
-            prevBtn.addEventListener('click', showPrev);
-            nextBtn.addEventListener('click', showNext);
+            // 导航按钮
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showPrev();
+            });
 
-            // Close on background click
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showNext();
+            });
+
+            // 点击背景关闭
             lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
+                if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
                     closeLightbox();
                 }
             });
 
-            // Keyboard navigation
+            // 键盘导航
             document.addEventListener('keydown', (e) => {
                 if (!lightbox.classList.contains('active')) return;
 
@@ -1326,6 +1742,28 @@
                 if (e.key === 'ArrowLeft') showPrev();
                 if (e.key === 'ArrowRight') showNext();
             });
+
+            // 触摸滑动支持
+            lightbox.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+
+            function handleSwipe() {
+                const swipeDistance = touchEndX - touchStartX;
+
+                if (Math.abs(swipeDistance) > swipeThreshold) {
+                    if (swipeDistance > 0) {
+                        showPrev(); // 右滑 -> 上一张
+                    } else {
+                        showNext(); // 左滑 -> 下一张
+                    }
+                }
+            }
         });
     </script>
 </body>
